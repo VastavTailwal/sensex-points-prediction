@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Predictor</title>
+</head>
+<body>
+    <h1>Stock Predictor</h1>
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <form action="/load_model" method="post">
+        <input type="submit" value="Load Model">
+    </form>
+    <form action="/predict_next_day" method="post">
+        <input type="submit" value="Predict Next Day">
+    </form>
+    <form action="/predict_next_month" method="post">
+        <input type="submit" value="Predict Next Month">
+    </form>
+    <form action="/save_predictions" method="post">
+        <input type="submit" value="Save Predictions">
+    </form>
+</body>
+</html>
