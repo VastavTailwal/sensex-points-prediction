@@ -1,4 +1,3 @@
 apis
-configs
 core
 utils

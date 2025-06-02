@@ -11,6 +11,7 @@ Requires-Dist: scikit-learn==1.6.1
 Requires-Dist: tensorflow==2.19.0
 Requires-Dist: plotly==6.1.2
 Requires-Dist: joblib==1.5.1
+Requires-Dist: pyyaml==6.0.2
 
 # Sunsex Points Prediction Using LSTM
 
