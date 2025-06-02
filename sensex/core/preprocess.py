@@ -36,6 +36,19 @@ def consolidate_data(dfs: tuple[DataFrame]) -> DataFrame:
     ).merge(
         oil, on='year', how='inner'
     )
+    return df
+
+
+def rename_and_rearrange_columns(df: DataFrame) -> DataFrame:
+    """
+    Rename columns of DataFrame and rearrange them as features first and target variable last.
+
+    Params
+    df: DataFrame
+
+    Returns
+    df: DataFrame after renaming and rearranging columns
+    """
     df.columns = [
         'date', 'points', 'usinr', 'year', 'month', 'day', 'gdp', 'inflation',
         'interest', 'leap', 'election', 'dow_jones', 'gold', 'oil'
