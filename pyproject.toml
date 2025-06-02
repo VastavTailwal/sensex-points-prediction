@@ -1,0 +1,24 @@
+[project]
+name = "sensex-prediction"
+version = "0.1.0"
+description = "Sensex Prediction is a machine learning project aimed at forecasting the Bombay Stock Exchange (BSE) Sensex index."
+authors = [
+    { name = "Vastav Tailwal", email = "tailwalvastav@gmail.com" }
+]
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "pandas==2.2.3",
+    "seaborn==0.13.2",
+    "scikit-learn==1.6.1",
+    "tensorflow==2.19.0",
+    "plotly==6.1.2",
+    "joblib==1.5.1"
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["sensex-prediction"]
