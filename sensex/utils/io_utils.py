@@ -1,6 +1,8 @@
 from pandas import DataFrame, read_csv
+from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras.models import load_model as load_keras_model
 from tensorflow.keras import Model
+import joblib
 
 
 def load_data(df_path: str) -> DataFrame:
@@ -10,7 +12,7 @@ def load_data(df_path: str) -> DataFrame:
     Parameters
     ----------
     df_path : str
-        Path to load dataframe.
+        Path to load the dataframe.
 
     Returns
     -------
@@ -28,7 +30,7 @@ def save_data(df: DataFrame, df_path: str) -> None:
     ----------
     df : pd.dataframe.
     df_path : str
-        Path to save dataframe.
+        Path to save the dataframe.
 
     Returns
     -------
@@ -69,3 +71,36 @@ def save_model(model_path: str, model: Model) -> None:
     None
     """
     model.save(model_path)
+
+
+def load_scaler(scaler_path: str) -> MinMaxScaler:
+    """
+    Loads scaler from scaler_path.
+
+    Parameters
+    ----------
+    scaler_path : str
+        Path to load the scaler.
+
+    Returns
+    -------
+    scaler : MinMaxScaler
+    """
+    scaler = joblib.load(scaler_path)
+    return scaler
+
+def save_scaler(scaler_path: str, scaler: MinMaxScaler) -> None:
+    """
+    Saves scaler to scaler_path.
+
+    Parameters
+    ----------
+    scaler_path : str
+        Path to save the scaler.
+    scaler : MinMaxScaler
+
+    Returns
+    -------
+    None
+    """
+    joblib.dump(scaler, scaler_path)

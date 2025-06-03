@@ -105,6 +105,7 @@ def scale_features(x_train: np.ndarray, x_test: np.ndarray) -> tuple[any, ...]:
     -------
     x_train : np.ndarray
     x_test : np.ndarray
+    feature_scaler : MinMaxScaler
     """
     feature_scaler = MinMaxScaler()
     x_train = feature_scaler.fit_transform(X=x_train)
@@ -112,7 +113,7 @@ def scale_features(x_train: np.ndarray, x_test: np.ndarray) -> tuple[any, ...]:
     return x_train, x_test, feature_scaler
 
 
-def scale_target(y_train: np.ndarray, y_test: np.ndarray) -> tuple[np.ndarray, ...]:
+def scale_target(y_train: np.ndarray, y_test: np.ndarray) -> tuple[any, ...]:
     """
     Scales target variable using MinMaxScaler.
 
@@ -127,8 +128,9 @@ def scale_target(y_train: np.ndarray, y_test: np.ndarray) -> tuple[np.ndarray, .
     -------
     y_train : np.ndarray
     y_test : np.ndarray
+    target_scaler : MinMaxScaler
     """
     target_scaler = MinMaxScaler()
     y_train = target_scaler.fit_transform(X=y_train)
     y_test = target_scaler.transform(X=y_test)
-    return y_train, y_test
+    return y_train, y_test, target_scaler
