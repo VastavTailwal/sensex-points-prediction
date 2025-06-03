@@ -12,7 +12,7 @@ def load_config(file_path: str) -> dict:
 
     Returns
     -------
-    dict
+    conf : dict
         Dictionary with config values.
     """
     with open(file_path, 'r') as file:

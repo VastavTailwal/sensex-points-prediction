@@ -14,7 +14,7 @@ def load_data(df_path: str) -> DataFrame:
 
     Returns
     -------
-    pd.DataFrame
+    df : pd.DataFrame
     """
     df = read_csv(df_path)
     return df
@@ -48,7 +48,7 @@ def load_model(model_path: str) -> Model:
 
     Returns
     -------
-    keras.Model
+    model : keras.Model
     """
     model = load_keras_model(model_path)
     return model

@@ -2,7 +2,6 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
-import joblib
 
 
 def consolidate_data(dfs: tuple[pd.DataFrame, ...]) -> pd.DataFrame:
@@ -16,7 +15,7 @@ def consolidate_data(dfs: tuple[pd.DataFrame, ...]) -> pd.DataFrame:
 
     Returns
     -------
-    pd.DataFrame
+    df : pd.DataFrame
     """
     if len(dfs) != 9:
         raise ValueError(f"Expected 9 DataFrames, but got {len(dfs)}")
@@ -56,7 +55,7 @@ def rename_and_rearrange_columns(df: pd.DataFrame) -> pd.DataFrame:
 
     Returns
     -------
-    pd.DataFrame
+    df : pd.DataFrame
     """
     df.columns = [
         'date', 'points', 'usinr', 'year', 'month', 'day', 'gdp', 'inflation',
@@ -77,25 +76,21 @@ def split_data(features: pd.DataFrame, target: pd.Series, test_size: float = 0.2
         Input feature set.
     target : pd.DataFrame
         Target variable.
-    test_size : pd.DataFrame
+    test_size : float, default 0.2
         Proportion of the dataset to include in the test split.
 
     Returns
     -------
-    np.ndarray
-        x_train
-    np.ndarray
-        x_test
-    np.ndarray
-        y_train
-    np.ndarray
-        y_test
+    x_train : np.ndarray
+    x_test : np.ndarray
+    y_train : np.ndarray
+    y_test : np.ndarray
     """
     x_train, x_test, y_train, y_test = train_test_split(features, target, test_size=test_size, shuffle=False)
     return x_train, x_test, y_train, y_test
 
 
-def scale_features(x_train: np.ndarray, x_test: np.ndarray) -> tuple[np.ndarray, ...]:
+def scale_features(x_train: np.ndarray, x_test: np.ndarray) -> tuple[any, ...]:
     """
     Scales features using MinMaxScaler.
 
@@ -108,16 +103,13 @@ def scale_features(x_train: np.ndarray, x_test: np.ndarray) -> tuple[np.ndarray,
 
     Returns
     -------
-    np.ndarray
-        x_train
-    np.ndarray
-        x_test
+    x_train : np.ndarray
+    x_test : np.ndarray
     """
     feature_scaler = MinMaxScaler()
     x_train = feature_scaler.fit_transform(X=x_train)
     x_test = feature_scaler.transform(X=x_test)
-    joblib.dump(feature_scaler, 'feature_scaler.gz')
-    return x_train, x_test
+    return x_train, x_test, feature_scaler
 
 
 def scale_target(y_train: np.ndarray, y_test: np.ndarray) -> tuple[np.ndarray, ...]:
@@ -127,16 +119,14 @@ def scale_target(y_train: np.ndarray, y_test: np.ndarray) -> tuple[np.ndarray, .
     Parameters
     ----------
     y_train : np.ndarray
-        Train target variable.
+        Train target variable before scaling.
     y_test : np.ndarray
-        Test target variable.
+        Test target variable before scaling.
 
     Returns
     -------
-    np.ndarray
-        Train target variable after scaling.
-    np.ndarray
-        Test target variable after scaling.
+    y_train : np.ndarray
+    y_test : np.ndarray
     """
     target_scaler = MinMaxScaler()
     y_train = target_scaler.fit_transform(X=y_train)
