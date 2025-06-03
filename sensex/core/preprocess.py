@@ -1,22 +1,29 @@
-from pandas import DataFrame, merge
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import MinMaxScaler
+import joblib
 
 
-def consolidate_data(dfs: tuple[DataFrame]) -> DataFrame:
+def consolidate_data(dfs: tuple[pd.DataFrame, ...]) -> pd.DataFrame:
     """
     Merge multiple DataFrames into a single consolidated DataFrame.
 
-    Params:
-    dataframes: tuple of dataframes
+    Parameters
+    ----------
+    dfs : tuple of pd.DataFrames
+        Order of dataframes - points, us_inr, gdp, inflation, interest_rate, leap_election, dow_jones, gold, oil.
 
-    Returns:
-    df: single consolidated dataframe
+    Returns
+    -------
+    pd.DataFrame
     """
     if len(dfs) != 9:
         raise ValueError(f"Expected 9 DataFrames, but got {len(dfs)}")
 
     points, us_inr, gdp, inflation, interest_rate, leap_election, dow_jones, gold, oil = dfs
 
-    df = merge(points, us_inr, on='date', how='inner', suffixes=('_ssx', '_usinr'))
+    df = pd.merge(points, us_inr, on='date', how='inner', suffixes=('_ssx', '_usinr'))
     df['year'] = df['date'].dt.year
     df['month'] = df['date'].dt.month
     df['day'] = df['date'].dt.day
@@ -39,15 +46,17 @@ def consolidate_data(dfs: tuple[DataFrame]) -> DataFrame:
     return df
 
 
-def rename_and_rearrange_columns(df: DataFrame) -> DataFrame:
+def rename_and_rearrange_columns(df: pd.DataFrame) -> pd.DataFrame:
     """
     Rename columns of DataFrame and rearrange them as features first and target variable last.
 
-    Params
-    df: DataFrame
+    Parameters
+    ----------
+    df : pd.DataFrame
 
     Returns
-    df: DataFrame after renaming and rearranging columns
+    -------
+    pd.DataFrame
     """
     df.columns = [
         'date', 'points', 'usinr', 'year', 'month', 'day', 'gdp', 'inflation',
@@ -56,3 +65,80 @@ def rename_and_rearrange_columns(df: DataFrame) -> DataFrame:
     df = df.iloc[:, [0, 2, 6, 7, 8, 9, 10, 11, 12, 13, 1]]
     df.set_index('date')
     return df
+
+
+def split_data(features: pd.DataFrame, target: pd.Series, test_size: float = 0.2) -> tuple[np.ndarray, ...]:
+    """
+    Splits features and target into training and testing sets without shuffling.
+
+    Parameters
+    ----------
+    features : pd.DataFrame
+        Input feature set.
+    target : pd.DataFrame
+        Target variable.
+    test_size : pd.DataFrame
+        Proportion of the dataset to include in the test split.
+
+    Returns
+    -------
+    np.ndarray
+        x_train
+    np.ndarray
+        x_test
+    np.ndarray
+        y_train
+    np.ndarray
+        y_test
+    """
+    x_train, x_test, y_train, y_test = train_test_split(features, target, test_size=test_size, shuffle=False)
+    return x_train, x_test, y_train, y_test
+
+
+def scale_features(x_train: np.ndarray, x_test: np.ndarray) -> tuple[np.ndarray, ...]:
+    """
+    Scales features using MinMaxScaler.
+
+    Parameters
+    ----------
+    x_train : np.ndarray
+        Train features before scaling.
+    x_test: np.ndarray
+        Test features before scaling.
+
+    Returns
+    -------
+    np.ndarray
+        x_train
+    np.ndarray
+        x_test
+    """
+    feature_scaler = MinMaxScaler()
+    x_train = feature_scaler.fit_transform(X=x_train)
+    x_test = feature_scaler.transform(X=x_test)
+    joblib.dump(feature_scaler, 'feature_scaler.gz')
+    return x_train, x_test
+
+
+def scale_target(y_train: np.ndarray, y_test: np.ndarray) -> tuple[np.ndarray, ...]:
+    """
+    Scales target variable using MinMaxScaler.
+
+    Parameters
+    ----------
+    y_train : np.ndarray
+        Train target variable.
+    y_test : np.ndarray
+        Test target variable.
+
+    Returns
+    -------
+    np.ndarray
+        Train target variable after scaling.
+    np.ndarray
+        Test target variable after scaling.
+    """
+    target_scaler = MinMaxScaler()
+    y_train = target_scaler.fit_transform(X=y_train)
+    y_test = target_scaler.transform(X=y_test)
+    return y_train, y_test
