@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from keras.src.legacy.preprocessing.sequence import TimeseriesGenerator
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 
@@ -134,3 +135,23 @@ def scale_target(y_train: np.ndarray, y_test: np.ndarray) -> tuple[any, ...]:
     y_train = target_scaler.fit_transform(X=y_train)
     y_test = target_scaler.transform(X=y_test)
     return y_train, y_test, target_scaler
+
+
+def convert_to_time_series(x: np.ndarray,y: np.ndarray, length: int, batch_size: int) -> TimeseriesGenerator:
+    """
+    Converts data into time series.
+
+    Parameters
+    ----------
+    x : np.ndarray
+    y : np.ndarray
+    length : int
+        length of time series window
+    batch_size : int
+
+    Returns
+    -------
+    time_series_gen : TimeseriesGenerator
+    """
+    time_series_gen = TimeseriesGenerator(x, y, length=length, sampling_rate=1, batch_size=batch_size)
+    return time_series_gen
