@@ -23,6 +23,5 @@ features:
   - points
 
 preprocess:
-  window_length: 30
+  length: 30
   batch_size: 32
-  num_features: 10

@@ -1,2 +1,45 @@
 paths:
-  scaler: "models/scaler.gz"
+  train_scaler: "models/train_scaler.gz"
+  test_scaler: "models/test_scaler.gz"
+  model: "models/bullbear.keras"
+
+model_hps:
+  window_length: 30
+  n_features: 10
+
+lstm_hps:
+  - units: 128
+    activation: tanh
+    return_sequences: true
+    dropout: 0.3
+
+  - units: 128
+    activation: tanh
+    return_sequences: true
+    dropout: 0.3
+
+  - units: 128
+    activation: tanh
+    return_sequences: true
+    dropout: 0.3
+
+  - units: 64
+    activation: tanh
+    return_sequences: false
+    dropout: 0.3
+
+dense_hps:
+  - units: 1
+    activation: linear
+
+trainer_hps:
+  optimizer: adam
+  loss: mean_squared_error
+  epochs: 100
+  batch_size: 32
+  shuffle: False
+  verbose: 1
+
+early_stopping_hps:
+  monitor: val_loss
+  patience: 5

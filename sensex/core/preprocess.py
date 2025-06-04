@@ -3,6 +3,7 @@ import pandas as pd
 from keras.src.legacy.preprocessing.sequence import TimeseriesGenerator
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
+from typing import Any
 
 
 def consolidate_data(dfs: tuple[pd.DataFrame, ...]) -> pd.DataFrame:
@@ -91,7 +92,7 @@ def split_data(features: pd.DataFrame, target: pd.Series, test_size: float = 0.2
     return x_train, x_test, y_train, y_test
 
 
-def scale_features(x_train: np.ndarray, x_test: np.ndarray) -> tuple[any, ...]:
+def scale_features(x_train: np.ndarray, x_test: np.ndarray) -> tuple[Any, ...]:
     """
     Scales features using MinMaxScaler.
 
@@ -114,7 +115,7 @@ def scale_features(x_train: np.ndarray, x_test: np.ndarray) -> tuple[any, ...]:
     return x_train, x_test, feature_scaler
 
 
-def scale_target(y_train: np.ndarray, y_test: np.ndarray) -> tuple[any, ...]:
+def scale_target(y_train: np.ndarray, y_test: np.ndarray) -> tuple[Any, ...]:
     """
     Scales target variable using MinMaxScaler.
 
