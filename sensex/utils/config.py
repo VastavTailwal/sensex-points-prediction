@@ -1,7 +1,8 @@
 import yaml
+from typing import Any
 
 
-def load_config(file_path: str) -> dict:
+def load_config(file_path: str) -> dict[str, Any]:
     """
     Loads configuration from a YAML file.
 

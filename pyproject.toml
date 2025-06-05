@@ -1,6 +1,6 @@
 [project]
 name = "sensex-prediction"
-version = "0.1.0"
+version = "0.2.0"
 description = "Sensex Prediction is a machine learning project aimed at forecasting the Bombay Stock Exchange (BSE) Sensex index."
 authors = [
     { name = "Vastav Tailwal", email = "tailwalvastav@gmail.com" }
