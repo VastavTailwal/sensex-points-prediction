@@ -147,7 +147,7 @@ def convert_to_time_series(x: np.ndarray,y: np.ndarray, length: int, batch_size:
     x : np.ndarray
     y : np.ndarray
     length : int
-        length of time series window
+        Length of the time series window.
     batch_size : int
 
     Returns
@@ -156,3 +156,20 @@ def convert_to_time_series(x: np.ndarray,y: np.ndarray, length: int, batch_size:
     """
     time_series_gen = TimeseriesGenerator(x, y, length=length, sampling_rate=1, batch_size=batch_size)
     return time_series_gen
+
+
+def get_prev_window_df(df: pd.DataFrame, window_length: int) -> pd.DataFrame:
+    """
+    Extracts the last window from dataframe.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+    window_length : int
+        Length of the time series window.
+
+    Returns
+    -------
+    df : pd.DataFrame
+    """
+    return df.iloc[-window_length - 1:, :]
