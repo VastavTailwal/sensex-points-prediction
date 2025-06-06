@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: sensex-prediction
-Version: 0.2.0
+Version: 0.3.0
 Summary: Sensex Prediction is a machine learning project aimed at forecasting the Bombay Stock Exchange (BSE) Sensex index.
 Author-email: Vastav Tailwal <tailwalvastav@gmail.com>
 Requires-Python: >=3.8
