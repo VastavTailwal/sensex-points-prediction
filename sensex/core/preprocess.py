@@ -6,13 +6,13 @@ from sklearn.preprocessing import MinMaxScaler
 from typing import Any
 
 
-def consolidate_data(dfs: tuple[pd.DataFrame, ...]) -> pd.DataFrame:
+def consolidate_data(dfs: list[pd.DataFrame]) -> pd.DataFrame:
     """
     Merge multiple DataFrames into a single consolidated DataFrame.
 
     Parameters
     ----------
-    dfs : tuple of pd.DataFrames
+    dfs : list of pd.DataFrames
         Order of dataframes - points, us_inr, gdp, inflation, interest_rate, leap_election, dow_jones, gold, oil.
 
     Returns
@@ -23,8 +23,11 @@ def consolidate_data(dfs: tuple[pd.DataFrame, ...]) -> pd.DataFrame:
         raise ValueError(f"Expected 9 DataFrames, but got {len(dfs)}")
 
     points, us_inr, gdp, inflation, interest_rate, leap_election, dow_jones, gold, oil = dfs
+    gdp = gdp[['year', 'gdp']]
+    us_inr = us_inr[['date', 'price']]
 
     df = pd.merge(points, us_inr, on='date', how='inner', suffixes=('_ssx', '_usinr'))
+    df['date'] = pd.to_datetime(df['date'])
     df['year'] = df['date'].dt.year
     df['month'] = df['date'].dt.month
     df['day'] = df['date'].dt.day

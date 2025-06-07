@@ -22,6 +22,40 @@ def load_data(df_path: str) -> DataFrame:
     return df
 
 
+def load_sensex_with_date(df_path: str) -> DataFrame:
+    """
+    Loads dataframe from Sensex df_path.
+
+    Parameters
+    ----------
+    df_path : str
+        Path to load the Sensex dataframe.
+
+    Returns
+    -------
+    df : pd.DataFrame
+    """
+    df = read_csv(df_path, parse_dates=[0], date_format='%d-%b-%y')
+    return df
+
+
+def load_us_inr_with_date(df_path: str) -> DataFrame:
+    """
+    Loads dataframe from US/INR df_path.
+
+    Parameters
+    ----------
+    df_path : str
+        Path to load the US/INR dataframe.
+
+    Returns
+    -------
+    df : pd.DataFrame
+    """
+    df = read_csv(df_path, parse_dates=[0], date_format='%d-%m-%y')
+    return df
+
+
 def save_data(df: DataFrame, df_path: str) -> None:
     """
     Saves dataframe to df_path.

@@ -1,10 +1,10 @@
 paths:
+  points: "data/sensex.csv"
+  us_inr: "data/usd_inr.csv"
   gdp: "data/gdp.csv"
   inflation: "data/inflation.csv"
   interest: "data/interest.csv"
   leap_election: "data/leapNelection.csv"
-  points: "data/sensex.csv"
-  us_inr: "data/usd_inr.csv"
   dow_jones: "data/dowJones.csv"
   gold: "data/gold.csv"
   oil: "data/oil.csv"
