@@ -6,13 +6,13 @@ import os
 
 # base path for SensexPointsPrediction
 BASE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-DATA_CONFIG_PATHS = os.path.join(BASE_PATH, 'configs', 'data.yaml')
-DATASET_NAME = 'main.csv'
+DATA_CONFIG_PATH = os.path.join(BASE_PATH, 'configs', 'data.yaml')
+DATA_SAVE_PATH = os.path.join(BASE_PATH, 'data', 'main.csv')
 
-# load data configuration
-data_config = config.load_config(DATA_CONFIG_PATHS)
+# load data configs
+data_config = config.load_config(DATA_CONFIG_PATH)
+
 dfs = []
-
 # special handling for 'points' and 'us_inr' datasets, which require date parsing
 for df, path in data_config['paths'].items():
     if df == 'points':
@@ -25,9 +25,9 @@ for df, path in data_config['paths'].items():
 # merging all the dataframes
 df = consolidate_data(dfs)
 
-# rename columns and adjust their order to standardize the structure of the final DataFrame
+# rename columns and adjust their order to standardize the structure of the final dataframe
 df = rename_and_rearrange_columns(df)
 
-# saving dataframe `df`
-io_utils.save_data(df, os.path.join(BASE_PATH, 'data', DATASET_NAME))
-print("Data saved successfully")
+# saving dataframe
+io_utils.save_data(df, DATA_SAVE_PATH)
+print('Data saved successfully')
