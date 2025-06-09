@@ -29,12 +29,12 @@ trainer_hps = model_config['trainer_hps']
 early_stopping_hps = model_config['early_stopping_hps']
 
 # model and scalers save paths
-model_save_path = model_config['paths']['model']
-train_scaler_save_path = model_config['paths']['train_scaler']
-test_scaler_save_path = model_config['paths']['test_scaler']
+MODEL_SAVE_PATH = os.path.join(BASE_PATH, model_config['paths']['model'])
+TRAIN_SCALER_SAVE_PATH = os.path.join(BASE_PATH, model_config['paths']['train_scaler'])
+TEST_SCALER_SAVE_PATH = os.path.join(BASE_PATH, model_config['paths']['test_scaler'])
 
 # splitting data to train, test
-features, target = df, df[:, -1]
+features, target = df.iloc[:, 1:], df.iloc[:, -1]
 x_train, x_test, y_train, y_test = split_data(features, target)
 
 # scaling features and target
@@ -50,9 +50,9 @@ model = get_model(model_hps, lstm_hps, dense_hps, trainer_hps)
 history = train_model(model, training_data, val_data, trainer_hps, early_stopping_hps)
 
 # saving artifacts
-save_model(model_save_path, model)
-save_scaler(train_scaler_save_path, feature_scaler)
-save_scaler(test_scaler_save_path, target_scaler)
+save_model(MODEL_SAVE_PATH, model)
+save_scaler(TRAIN_SCALER_SAVE_PATH, feature_scaler)
+save_scaler(TEST_SCALER_SAVE_PATH, target_scaler)
 
 # model evaluation
-evaluate_model(model, target_scaler, x_test, y_test)
+evaluate_model(model, target_scaler, val_data)

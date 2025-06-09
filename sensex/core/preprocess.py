@@ -92,7 +92,7 @@ def split_data(features: pd.DataFrame, target: pd.Series, test_size: float = 0.2
     y_test : np.ndarray
     """
     x_train, x_test, y_train, y_test = train_test_split(features, target, test_size=test_size, shuffle=False)
-    return x_train, x_test, y_train, y_test
+    return x_train.values, x_test.values, y_train.values.reshape(-1, 1), y_test.values.reshape(-1, 1)
 
 
 def scale_features(x_train: np.ndarray, x_test: np.ndarray) -> tuple[Any, ...]:

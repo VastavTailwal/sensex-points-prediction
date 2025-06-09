@@ -7,31 +7,34 @@ from tensorflow.keras.callbacks import History
 from matplotlib import pyplot as plt
 
 
-def evaluate_model(model: Model, scaler: MinMaxScaler, x_test: TimeseriesGenerator, y_test: TimeseriesGenerator) -> None:
+def evaluate_model(model: Model, scaler: MinMaxScaler, val_data: TimeseriesGenerator) -> None:
     """
-    Evaluate a trained LSTM model and metrics.
+    Evaluate a trained LSTM model and print metrics.
 
     Parameters
     ----------
     model : Model
     scaler : MinMaxScaler
         Scaler used during training for inverse transformation.
-    x_test : TimeseriesGenerator
-        Test input data (shape: [samples, timesteps, features])
-    y_test : TimeseriesGenerator
-        Validation target data (shape: [samples, 1])
+    val_data : TimeseriesGenerator
+        Test data used for evaluation.
 
     Returns
     -------
     None
     """
-    y_pred = model.predict(x_test)
+    y_pred = model.predict(val_data)
     y_pred = scaler.inverse_transform(y_pred)
+    y_true = []
+    for i in range(len(val_data)):
+        _, y_batch = val_data[i]
+        y_true.append(y_batch)
+    y_true = np.concatenate(y_true)
 
-    print(f'RMSE: {root_mean_squared_error(y_test, y_pred)}')
-    print(f'MSE: {mean_squared_error(y_test, y_pred)}')
-    print(f'MAE: {mean_absolute_error(y_test, y_pred)}')
-    print(f'R2: {r2_score(y_test, y_pred)}')
+    print(f'RMSE: {root_mean_squared_error(y_true, y_pred)}')
+    print(f'MSE: {mean_squared_error(y_true, y_pred)}')
+    print(f'MAE: {mean_absolute_error(y_true, y_pred)}')
+    print(f'R2: {r2_score(y_true, y_pred)}')
 
 
 def plot_history(history: History) -> None:

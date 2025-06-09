@@ -7,7 +7,7 @@ import joblib
 
 def load_data(df_path: str) -> DataFrame:
     """
-    Loads dataframe from df_path.
+    Loads dataframe from `df_path`.
 
     Parameters
     ----------
@@ -24,7 +24,7 @@ def load_data(df_path: str) -> DataFrame:
 
 def load_sensex_with_date(df_path: str) -> DataFrame:
     """
-    Loads dataframe from Sensex df_path.
+    Loads dataframe from Sensex `df_path`.
 
     Parameters
     ----------
@@ -41,7 +41,7 @@ def load_sensex_with_date(df_path: str) -> DataFrame:
 
 def load_us_inr_with_date(df_path: str) -> DataFrame:
     """
-    Loads dataframe from US/INR df_path.
+    Loads dataframe from US/INR `df_path`.
 
     Parameters
     ----------
@@ -58,7 +58,7 @@ def load_us_inr_with_date(df_path: str) -> DataFrame:
 
 def save_data(df: DataFrame, df_path: str) -> None:
     """
-    Saves dataframe to df_path.
+    Saves dataframe to `df_path`.
 
     Parameters
     ----------
@@ -75,7 +75,7 @@ def save_data(df: DataFrame, df_path: str) -> None:
 
 def load_model(model_path: str) -> Model:
     """
-    Loads model from model_path.
+    Loads model from `model_path`.
 
     Parameters
     ----------
@@ -92,7 +92,7 @@ def load_model(model_path: str) -> Model:
 
 def save_model(model_path: str, model: Model) -> None:
     """
-    Saves model to model_path.
+    Saves model to `model_path`.
 
     Parameters
     ----------
@@ -109,7 +109,7 @@ def save_model(model_path: str, model: Model) -> None:
 
 def load_scaler(scaler_path: str) -> MinMaxScaler:
     """
-    Loads scaler from scaler_path.
+    Loads scaler from `scaler_path`.
 
     Parameters
     ----------
@@ -125,7 +125,7 @@ def load_scaler(scaler_path: str) -> MinMaxScaler:
 
 def save_scaler(scaler_path: str, scaler: MinMaxScaler) -> None:
     """
-    Saves scaler to scaler_path.
+    Saves scaler to `scaler_path`.
 
     Parameters
     ----------
