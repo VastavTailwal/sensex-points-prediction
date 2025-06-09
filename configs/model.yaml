@@ -43,3 +43,5 @@ trainer_hps:
 early_stopping_hps:
   monitor: val_loss
   patience: 5
+
+bias: 6000

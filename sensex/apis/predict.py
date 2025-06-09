@@ -37,7 +37,7 @@ def predict(
     return prediction
 
 
-def get_next_month_data(
+def get_next_month_forecast(
         window: TimeseriesGenerator,
         window_length: int,
         target_scaler: MinMaxScaler,
