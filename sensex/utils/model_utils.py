@@ -7,7 +7,7 @@ from tensorflow.keras.callbacks import History
 from matplotlib import pyplot as plt
 
 
-def evaluate_model(model: Model, scaler: MinMaxScaler, x_test: TimeseriesGenerator, y_test: TimeseriesGenerator) -> dict[str, float]:
+def evaluate_model(model: Model, scaler: MinMaxScaler, x_test: TimeseriesGenerator, y_test: TimeseriesGenerator) -> None:
     """
     Evaluate a trained LSTM model and metrics.
 
@@ -23,20 +23,15 @@ def evaluate_model(model: Model, scaler: MinMaxScaler, x_test: TimeseriesGenerat
 
     Returns
     -------
-    metrics : dict[str, float]
-        Metrics - RMSE, MSE, MAE, R2_score.
+    None
     """
     y_pred = model.predict(x_test)
     y_pred = scaler.inverse_transform(y_pred)
 
-    metrics = {
-        'RMSE': root_mean_squared_error(y_test, y_pred),
-        'MSE': mean_squared_error(y_test, y_pred),
-        'MAE': mean_absolute_error(y_test, y_pred),
-        'R2': r2_score(y_test, y_pred)
-    }
-
-    return metrics
+    print(f'RMSE: {root_mean_squared_error(y_test, y_pred)}')
+    print(f'MSE: {mean_squared_error(y_test, y_pred)}')
+    print(f'MAE: {mean_absolute_error(y_test, y_pred)}')
+    print(f'R2: {r2_score(y_test, y_pred)}')
 
 
 def plot_history(history: History) -> None:

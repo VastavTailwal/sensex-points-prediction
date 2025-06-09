@@ -63,9 +63,9 @@ def get_model(
 
 
 def train_model(
+        model: Model,
         train: TimeseriesGenerator,
         val: TimeseriesGenerator,
-        model: Model,
         trainer_hps: dict[str, Any],
         early_stopping_hps: dict[str, Any]
 ) -> History:
@@ -75,12 +75,12 @@ def train_model(
 
     Parameters
     ----------
+    model : Model
+        A compiled Keras Model instance to be trained.
     train : TimeseriesGenerator
         Training data.
     val : TimeseriesGenerator
         Validation data.
-    model : Model
-        A compiled Keras Model instance to be trained.
     trainer_hps : dict[str, Any]
         Model training hyperparameters.
     early_stopping_hps : dict[str, Any]
