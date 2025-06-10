@@ -6,8 +6,8 @@ from sklearn.preprocessing import MinMaxScaler
 
 
 def predict(
-        prev_window: TimeseriesGenerator,
-        features: np.ndarray,
+        window: pd.DataFrame,
+        data_to_forecast: TimeseriesGenerator,
         target_scaler: MinMaxScaler,
         model: Model
 ) -> pd.DataFrame:
@@ -16,9 +16,9 @@ def predict(
 
     Parameters
     ----------
-    prev_window : TimeseriesGenerator
+    window : pd.DataFrame
         Last window of the data.
-    features : np.ndarray
+    data_to_forecast : TimeseriesGenerator
         Scaled features to predict.
     target_scaler : MinMaxScaler
         Scaler for target values.
@@ -32,30 +32,32 @@ def predict(
         'usinr', 'gdp', 'inflation', 'interest', 'leap',
         'election', 'dow_jones', 'gold', 'oil', 'points'
     ]
-    target_pred = target_scaler.inverse_transform(model.predict(prev_window))
-    prediction = pd.DataFrame(np.concatenate((features[-1, :-1].reshape((1, 9)), target_pred), axis=1), columns=columns)
+    target_pred = target_scaler.inverse_transform(model.predict(data_to_forecast))
+    prediction = pd.DataFrame(
+        np.concatenate((window.iloc[-1, 1: -1].values.reshape(1, 9), target_pred), axis=1),
+        columns=columns)
     return prediction
 
 
 def get_next_month_forecast(
-        window: TimeseriesGenerator,
+        window: pd.DataFrame,
         window_length: int,
         target_scaler: MinMaxScaler,
         model: Model,
-        data_to_predict: np.ndarray
-) -> TimeseriesGenerator:
+        data_to_predict: TimeseriesGenerator
+) -> pd.DataFrame:
     """
     Get next month predicted sensex points.
 
     Parameters
     ----------
-    window : TimeseriesGenerator
+    window : pd.DataFrame
         Last window of the data.
     window_length : int
     target_scaler : MinMaxScaler
     model : Model
-    data_to_predict : np.ndarray
-        Scaled features to predict.
+    data_to_predict : TimeseriesGenerator
+        Scaled timeseries object to predict.
     Returns
     -------
     next_month_data : TimeseriesGenerator

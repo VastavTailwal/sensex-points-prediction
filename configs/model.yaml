@@ -1,6 +1,6 @@
 paths:
-  train_scaler: "models/train_scaler.gz"
-  test_scaler: "models/test_scaler.gz"
+  feature_scaler: "models/feature_scaler.gz"
+  target_scaler: "models/target_scaler.gz"
   model: "models/bullbear.keras"
 
 model_hps:
