@@ -49,10 +49,6 @@ The model achieved a low error on the training data, while the test MSE indicate
 
 3. Run the web application:
     ```bash
-    python app.py
-    ```
-   or
-    ```bash
     docker-compose up
     ```
 4. Open the app in your browser, and click on the "Predict" button to forecast Sensex points for the next 30 days.
