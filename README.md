@@ -38,8 +38,8 @@ The model achieved a low error on the training data, while the test MSE indicate
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/your-username/Sensex-points-prediction.git
-    cd "Sensex Points Prediction"
+    git clone https://github.com/VastavTailwal/sensex-points-prediction.git
+    cd "SensexPointsPrediction"
     ```
 
 2. Install dependencies:
