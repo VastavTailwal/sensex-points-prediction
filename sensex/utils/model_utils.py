@@ -7,9 +7,9 @@ from tensorflow.keras.callbacks import History
 from matplotlib import pyplot as plt
 
 
-def evaluate_model(model: Model, scaler: MinMaxScaler, val_data: TimeseriesGenerator) -> None:
+def evaluate_model(model: Model, scaler: MinMaxScaler, val_data: TimeseriesGenerator) -> dict[str, float]:
     """
-    Evaluate a trained LSTM model and print metrics.
+    Evaluate a trained LSTM model on different metrics.
 
     Parameters
     ----------
@@ -21,7 +21,8 @@ def evaluate_model(model: Model, scaler: MinMaxScaler, val_data: TimeseriesGener
 
     Returns
     -------
-    None
+    metrics : dict[str, float]
+        RMSE, MSE, MAE, R2
     """
     y_pred = model.predict(val_data)
     y_pred = scaler.inverse_transform(y_pred)
@@ -31,10 +32,13 @@ def evaluate_model(model: Model, scaler: MinMaxScaler, val_data: TimeseriesGener
         y_true.append(y_batch)
     y_true = np.concatenate(y_true)
 
-    print(f'RMSE: {root_mean_squared_error(y_true, y_pred)}')
-    print(f'MSE: {mean_squared_error(y_true, y_pred)}')
-    print(f'MAE: {mean_absolute_error(y_true, y_pred)}')
-    print(f'R2: {r2_score(y_true, y_pred)}')
+    metrics = {
+        'RMSE': float(np.sqrt(mean_squared_error(y_true, y_pred))),
+        'MSE': float(mean_squared_error(y_true, y_pred)),
+        'MAE': float(mean_absolute_error(y_true, y_pred)),
+        'R2': float(r2_score(y_true, y_pred))
+    }
+    return metrics
 
 
 def plot_history(history: History) -> None:
